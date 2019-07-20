@@ -1,7 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
 
+/*
 function App() {
   return (
     <div className="App">
@@ -22,5 +23,19 @@ function App() {
     </div>
   );
 }
+*/
 
-export default App;
+// export default App;
+
+function Box() {
+  return (
+    <div id='quote-box'>
+      <p id='text'>quote</p>
+      <p id='author'></p>
+      <button id='new-quote'>New Quote</button>
+      <button id='tweet-quote'>Tweet Quote</button>
+    </div>
+  );
+}
+
+export default Box;
