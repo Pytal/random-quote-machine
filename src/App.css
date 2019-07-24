@@ -1,51 +1,143 @@
-/*
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-  pointer-events: none;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.backdrop {
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  height: 100vh;
+}
+
+/* Grids */
+#quote-box { grid-area: quote-box; }
+.card { grid-area: card; }
+#new-quote { grid-area: new-quote; }
+#tweet-quote { grid-area: tweet-quote; }
+#text { grid-area: text; }
+#author { grid-area: author; }
+
+.grid {
+  position: relative;
+  height: fit-content;
+  top: 20%;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-areas: '. quote-box tweet-quote';
+  gap: 0 100px;
+}
+
+#quote-box {
+  position: relative;
+  justify-items: center;
+  perspective: 600px;
+  display: grid;
+  grid-template-rows: max-content max-content;
+  grid-template-areas: 'card'
+                       'new-quote';
+  gap: 20px 0;
+}
+
+#tweet-quote {
+  top: 115px;
+}
+
+/* Card */
+.card {
+  position: relative;
+  width: 500px;
+  height: 300px;
+  transition: transform 0s;
+  transform-style: preserve-3d;
+}
+
+.card-front, .card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  box-shadow: 0 0 0 5px white;
+  backface-visibility: hidden;
+  background-image: linear-gradient(135deg, rgb(248, 100, 84), rgb(251, 166, 157));
+}
+
+.card-front {
+  display: grid;
+  grid-template-rows: max-content max-content;
+  grid-template-areas: 'text'
+                       'author';
+}
+
+.card-back {
+  transform: rotateX(180deg);
+}
+
+/* Buttons */
+#new-quote {
+  position: relative;
+  width: 400px;
+  height: 70px;
+  border-radius: 35px;
+  font-family: 'Segoe UI';
+  font-size: 30px;
+  font-weight: bold;
+  background-color: white;
+  color: rgb(128, 170, 255);
+  box-shadow: 0 0 0 5px rgb(128, 170, 255) inset;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#new-quote:hover {
+  background-color: rgb(128, 170, 255);
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.trigger ~ .card {
+  transform: rotateX(360deg);
+  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);  
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-*/
-
-#quote-box {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+#tweet-quote {
   position: relative;
-  top: 200px;
-  background-color: rgba(76, 76, 76, 1);
-  width: 500px;
-  height: 300px;
-  border-radius: 8px;
+  width: 70px;
+  height: 70px;
+  border-radius: 35px;
+  font-family: 'Segoe UI';
+  font-size: 30px;
+  font-weight: bold;
+  background-color: white;
+  color: rgb(29, 161, 242);
+  box-shadow: 0 0 0 5px rgb(29, 161, 242) inset;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+#tweet-quote:hover {
+  background-color: rgb(29, 161, 242);
+  color: white;
+}
+
+/* Text */
+p {
+  position: relative;
+  font-family: 'Segoe UI';
+  font-weight: bold;
+  color: white;
+  word-wrap: break-word;
 }
 
 #text {
-  color: white;
+  margin: 30px 30px 0 30px;
+  height: 200px;
+  width: 440px;
+  font-size: 22px;
+}
+
+#author { 
+  height: max-content;
+  width: 440px;
+  font-size: 30px;
+  font-family: 'Ink Draft';
+  text-align: right;
+  margin: 10px 30px 30px 30px;
+}
+
+/* Remove Default Styles */
+button {
+  border: none;
+  outline: none;
 }
