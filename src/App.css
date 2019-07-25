@@ -53,7 +53,8 @@
 
 .trigger:defined ~ .card {
   transform: rotateX(360deg);
-  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1), box-shadow 1s cubic-bezier(0.075, 0.82, 0.165, 1);
+  transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1),
+              box-shadow 1s cubic-bezier(0.075, 0.82, 0.165, 1);
   box-shadow: none;
 }
 
@@ -89,6 +90,12 @@ button:active {
   filter: brightness(80%);
 }
 
+.trigger:defined {
+  pointer-events: none;
+  transform: scale(0.9);
+  opacity: 0;
+}
+
 #new-quote {
   position: relative;
   width: 400px;
@@ -102,7 +109,8 @@ button:active {
   box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.1),
               0 3px 5px 2px rgba(0, 0, 0, 0.1),
               0 3px 5px 2px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, filter 0.1s;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, filter 0.1s,
+              transform 1s cubic-bezier(0, 1, 0, 1), opacity 1s cubic-bezier(0, 1.15, 0, 1);
 }
 
 #new-quote:hover {
