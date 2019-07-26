@@ -11,6 +11,9 @@ const LOADS = ['Searching...', 'Generating...', 'Thinking...', 'Asking Alexa...'
                '🔎📚', '🔎🌐', '🤔'];
 
 // TODO: - add collision checks to QuoteBox
+//       - within #quote-box, there is an <a> element with id='tweet-quote'
+//       - #tweet-quote <a> element should have 'twitter.com/intent/tweet' in it's href
+//       - tweeting tweets the current quote
 
 // DONE: ✅ make button disappear on click
 //       ✅ make get random between min and max function
@@ -31,6 +34,7 @@ class QuoteBox extends React.Component {
     };
     this.getQuote = this.getQuote.bind(this);
     this.clicked = this.clicked.bind(this);
+    this.tweeted = this.tweeted.bind(this);
   }
 
   componentDidMount() {
@@ -44,13 +48,13 @@ class QuoteBox extends React.Component {
     let max = this.state.quotes.length - 1;
     const newQuote = this.state.quotes[randomBetween(min, max)];
     newQuote.quote = ' ' + newQuote.quote;
-    newQuote.author = '-' + newQuote.author.replace( /[^a-z. ]/gi, '' );
+    newQuote.author = '-' + newQuote.author.trim().replace( /[^a-z. ]/gi, '' );
     max = this.state.loads.length - 1;
     const newLoad = this.state.loads[randomBetween(min, max)];
     this.setState({
       load: newLoad
     });
-    setTimeout(() => {
+    setTimeout( () => {
       if (newLoad === '💤') {
         this.setState({
           quote: '',
@@ -64,15 +68,21 @@ class QuoteBox extends React.Component {
           isquote: true
         })
       }
-    }, 500);
+    }, 500 );
   }
 
   clicked() {
     const card = document.querySelector('.card');
-    const btn = document.querySelector('#new-quote');
-    btn.classList.add('trigger');
-    card.addEventListener('transitionend', () => btn.classList.remove('trigger'));
+    const quoteBtn = document.querySelector('#new-quote');
+    card.addEventListener('transitionend', () => quoteBtn.classList.remove('trigger'));
+    quoteBtn.classList.add('trigger');
     this.props.changeBackground();
+  }
+
+  tweeted() {
+    const tweetBtn = document.querySelector('#tweet-quote');
+    setTimeout( () => tweetBtn.classList.remove('trigger'), 1000 );
+    tweetBtn.classList.add('trigger');
   }
 
   render() {
@@ -95,7 +105,7 @@ class QuoteBox extends React.Component {
             </div>
           </div>
         </div>
-        <button id='tweet-quote'><i className='fa fa-twitter'></i></button>
+        <button onClick={this.tweeted} id='tweet-quote'><i className='fa fa-twitter'></i></button>
       </div>
     );
   }

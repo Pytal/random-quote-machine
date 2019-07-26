@@ -2,6 +2,7 @@
   display: flex;
   justify-content: center;
   height: 100vh;
+  width: 100vw;
   transition: background-color 1s cubic-bezier(0.645, 0.045, 0.355, 1);
 }
 
@@ -84,6 +85,13 @@ button {
   border: none;
   outline: none;
   cursor: pointer;
+  position: relative;
+  font-size: 30px;
+  height: 70px;
+  border-radius: 35px;
+  background-color: white;
+  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, filter 0.1s,
+              transform 1s cubic-bezier(0, 1, 0, 1), opacity 1s cubic-bezier(0, 1.15, 0, 1);
 }
 
 button:active {
@@ -97,50 +105,33 @@ button:active {
 }
 
 #new-quote {
-  position: relative;
   width: 400px;
-  height: 70px;
-  border-radius: 35px;
-  font-family: 'Segoe UI';
-  font-size: 30px;
-  font-weight: bold;
-  background-color: white;
   color: rgb(128, 170, 255);
   box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.1),
               0 3px 5px 2px rgba(0, 0, 0, 0.1),
               0 3px 5px 2px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, filter 0.1s,
-              transform 1s cubic-bezier(0, 1, 0, 1), opacity 1s cubic-bezier(0, 1.15, 0, 1);
 }
 
 #new-quote:hover {
-  background-color: rgb(128, 170, 255);
   color: white;
+  background-color: rgb(128, 170, 255);
   box-shadow: 0 5px 12px 5px rgba(0, 0, 0, 0.1),
               0 5px 12px 5px rgba(0, 0, 0, 0.1),
               0 5px 12px 5px rgba(0, 0, 0, 0.1);
 }
 
 #tweet-quote {
-  position: relative;
   width: 70px;
-  height: 70px;
-  border-radius: 35px;
-  font-family: 'Segoe UI';
-  font-size: 30px;
-  font-weight: bold;
-  background-color: white;
   color: rgb(29, 161, 242);
   box-shadow: 0 0 0 5px rgb(29, 161, 242) inset,
               0 3px 5px 2px rgba(0, 0, 0, 0.1),
               0 3px 5px 2px rgba(0, 0, 0, 0.1),
               0 3px 5px 2px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, filter 0.1s;
 }
 
 #tweet-quote:hover {
-  background-color: rgb(29, 161, 242);
   color: white;
+  background-color: rgb(29, 161, 242);
   box-shadow: 0 0 0 5px rgb(29, 161, 242) inset,
               0 5px 12px 5px rgba(0, 0, 0, 0.1),
               0 5px 12px 5px rgba(0, 0, 0, 0.1),
@@ -148,33 +139,39 @@ button:active {
 }
 
 /* Text */
+p, #new-quote, #tweet-quote {
+  font-family: 'Segoe UI', sans-serif;
+  font-weight: bold;
+}
+
 p {
   position: relative;
-  font-family: 'Segoe UI';
-  font-weight: bold;
   color: white;
   word-wrap: break-word;
 }
 
-#text {
-  margin: 30px 30px 0 30px;
-  height: 200px;
+#text, #author {
   width: 440px;
-  font-size: 22px;
+}
+
+#text, #back-text {
   text-align: center;
 }
 
+#text {
+  font-size: 22px;
+  height: 200px;
+  margin: 30px 30px 0 30px;
+}
+
 #back-text {
-  text-align: center;
   top: 100px;
   font-size: 30px;
 }
 
-#author { 
-  height: max-content;
-  width: 440px;
-  font-size: 30px;
+#author {
   font-family: 'Ink Draft';
+  font-size: 30px;
   text-align: right;
   margin: 10px 30px 30px 30px;
 }
