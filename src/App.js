@@ -13,21 +13,20 @@ const LOADS = ['Searching...', 'Generating...', 'Thinking...', 'Asking Alexa...'
 //       🆗 freeCC Feature Complete
 
 // DONE: ✅ make button disappear on click
-//       ✅ define get random between min and max function
+//       ✅ define randomBetween min and max function
 //       ✅ prettify author string
 //       ✅ implement tweet functionality
-//       ✅ define get new value function
+//       ✅ define getNewValue function
 //       ✅ add collision checks to QuoteBox
+//       ✅ replace while loop with do...while loop in getNewValue
 
 const randomBetween = (min, max) => ( Math.floor( Math.random() * (max - min + 1) + min ) );
 
 const getNewValue = (prev, arr) => {
   const min = 0;
   const max = arr.length - 1;
-  let curr = arr[randomBetween(min, max)];
-  while (curr === prev) {
-    curr = arr[randomBetween(min, max)];
-  };
+  let curr;
+  do { curr = arr[randomBetween(min, max)] } while (curr === prev);
   return curr;
 };
 
