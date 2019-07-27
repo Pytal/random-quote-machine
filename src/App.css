@@ -10,7 +10,7 @@
 #quote-box { grid-area: quote-box; }
 .card { grid-area: card; }
 #new-quote { grid-area: new-quote; }
-#tweet-quote { grid-area: tweet-quote; }
+#tweet-quote-btn { grid-area: tweet-quote-btn; }
 #text { grid-area: text; }
 #author { grid-area: author; }
 
@@ -18,10 +18,7 @@
   position: relative;
   height: fit-content;
   top: 20%;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-areas: '. quote-box tweet-quote';
-  gap: 0 100px;
+  display: flex;
 }
 
 #quote-box {
@@ -29,14 +26,16 @@
   justify-items: center;
   perspective: 600px;
   display: grid;
+  grid-template-columns: 70px max-content max-content;
   grid-template-rows: max-content max-content;
-  grid-template-areas: 'card'
-                       'new-quote';
+  grid-template-areas: '. card tweet-quote-btn'
+                       '. new-quote .';
   gap: 25px 0;
 }
 
-#tweet-quote {
+#tweet-quote-btn {
   top: 115px;
+  left: 105px;
 }
 
 /* Card */
@@ -120,7 +119,7 @@ button:active {
               0 5px 12px 5px rgba(0, 0, 0, 0.1);
 }
 
-#tweet-quote {
+#tweet-quote-btn {
   width: 70px;
   color: rgb(29, 161, 242);
   box-shadow: 0 0 0 5px rgb(29, 161, 242) inset,
@@ -129,7 +128,7 @@ button:active {
               0 3px 5px 2px rgba(0, 0, 0, 0.1);
 }
 
-#tweet-quote:hover {
+#tweet-quote-btn:hover {
   color: white;
   background-color: rgb(29, 161, 242);
   box-shadow: 0 0 0 5px rgb(29, 161, 242) inset,
@@ -139,7 +138,7 @@ button:active {
 }
 
 /* Text */
-p, #new-quote, #tweet-quote {
+p, #new-quote, #tweet-quote-btn {
   font-family: 'Segoe UI', sans-serif;
   font-weight: bold;
 }
@@ -174,4 +173,8 @@ p {
   font-size: 30px;
   text-align: right;
   margin: 10px 30px 30px 30px;
+}
+
+#tweet-quote {
+  display: none;
 }

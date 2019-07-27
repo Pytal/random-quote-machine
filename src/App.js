@@ -10,16 +10,27 @@ const LOADS = ['Searching...', 'Generating...', 'Thinking...', 'Asking Alexa...'
                'Going to the library...', '💤',
                '🔎📚', '🔎🌐', '🤔'];
 
-// TODO: - add collision checks to QuoteBox
-//       - within #quote-box, there is an <a> element with id='tweet-quote'
-//       - #tweet-quote <a> element should have 'twitter.com/intent/tweet' in it's href
-//       - tweeting tweets the current quote
+// TODO:
 
 // DONE: ✅ make button disappear on click
-//       ✅ make get random between min and max function
+//       ✅ define get random between min and max function
 //       ✅ prettify author string
+//       ✅ implement tweet functionality
+//       ✅ define get new value function
+//       ✅ add collision checks to QuoteBox
 
 const randomBetween = (min, max) => ( Math.floor( Math.random() * (max - min + 1) + min ) );
+
+const getNewValue = (prev, arr) => {
+  const min = 0;
+  const max = arr.length - 1;
+  let curr = arr[randomBetween(min, max)];
+  while (curr === prev) {
+    curr = arr[randomBetween(min, max)];
+  };
+  return curr;
+};
+
 
 class QuoteBox extends React.Component {
   constructor(props) {
@@ -44,13 +55,10 @@ class QuoteBox extends React.Component {
   }
 
   getQuote() {
-    const min = 0;
-    let max = this.state.quotes.length - 1;
-    const newQuote = this.state.quotes[randomBetween(min, max)];
+    const newQuote = getNewValue(this.state.quote, this.state.quotes);
     newQuote.quote = ' ' + newQuote.quote;
     newQuote.author = '-' + newQuote.author.trim().replace( /[^a-z. ]/gi, '' );
-    max = this.state.loads.length - 1;
-    const newLoad = this.state.loads[randomBetween(min, max)];
+    const newLoad = getNewValue(this.state.load, this.state.loads);
     this.setState({
       load: newLoad
     });
@@ -80,9 +88,13 @@ class QuoteBox extends React.Component {
   }
 
   tweeted() {
-    const tweetBtn = document.querySelector('#tweet-quote');
+    const tweetLnk = document.querySelector('#tweet-quote');
+    const tweetBtn = document.querySelector('#tweet-quote-btn');
     setTimeout( () => tweetBtn.classList.remove('trigger'), 1000 );
     tweetBtn.classList.add('trigger');
+    setTimeout( () => window.open( tweetLnk.href + '?&text=' + encodeURIComponent(
+                      '"' + this.state.quote.trim() + '" ' + this.state.author) ),
+                      150 );
   }
 
   render() {
@@ -104,8 +116,11 @@ class QuoteBox extends React.Component {
               <p id='back-text'>{this.state.load}</p>
             </div>
           </div>
+        <button onClick={this.tweeted} id='tweet-quote-btn'>
+          <i className='fa fa-twitter'></i>
+          <a id='tweet-quote' href='https://twitter.com/intent/tweet'>Tweet Quote</a>
+        </button>
         </div>
-        <button onClick={this.tweeted} id='tweet-quote'><i className='fa fa-twitter'></i></button>
       </div>
     );
   }
@@ -116,7 +131,7 @@ class Backdrop extends React.Component {
     super(props);
     this.state = {
       background: 'whitesmoke',
-      colors: ['#16A085', '#27AE60', '#F39C12', '#E74C3C',
+      colours: ['#16A085', '#27AE60', '#F39C12', '#E74C3C',
                '#9B59B6', '#FB6964', '#BDBB99',
                '#77B1A9', '#73A857']
 
@@ -125,12 +140,7 @@ class Backdrop extends React.Component {
   }
 
   changeBackground() {
-    const min = 0;
-    const max = this.state.colors.length - 1;
-    let newBackground = this.state.colors[randomBetween(min, max)];
-    while (newBackground === this.state.background) {
-      newBackground = this.state.colors[randomBetween(min, max)];
-    };
+    const newBackground = getNewValue(this.state.background, this.state.colours);
     this.setState({
       background: newBackground
     });
