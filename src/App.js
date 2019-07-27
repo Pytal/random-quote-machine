@@ -19,6 +19,7 @@ const LOADS = ['Searching...', 'Generating...', 'Thinking...', 'Asking Alexa...'
 //       ✅ define getNewValue function
 //       ✅ add collision checks to QuoteBox
 //       ✅ replace while loop with do...while loop in getNewValue
+//       ✅ improve quote symbol display logic
 
 const randomBetween = (min, max) => ( Math.floor( Math.random() * (max - min + 1) + min ) );
 
@@ -38,8 +39,7 @@ class QuoteBox extends React.Component {
       author: '-Bob',
       quotes: [],
       load: '',
-      loads: LOADS,
-      isquote: true
+      loads: LOADS
     };
     this.getQuote = this.getQuote.bind(this);
     this.clicked = this.clicked.bind(this);
@@ -64,14 +64,12 @@ class QuoteBox extends React.Component {
       if (newLoad === '💤') {
         this.setState({
           quote: '',
-          author: '',
-          isquote: false
+          author: ''
         })
       } else {
         this.setState({
           quote: newQuote.quote,
-          author: newQuote.author,
-          isquote: true
+          author: newQuote.author
         })
       }
     }, 500 );
@@ -105,7 +103,7 @@ class QuoteBox extends React.Component {
           <div className='card'>
             <div className='card-front'>
               <p id='text'>
-                {this.state.isquote ? <i className='fa fa-quote-left'></i> : ''}
+                {this.state.quote !== '' ? <i className='fa fa-quote-left'></i> : ''}
                 {this.state.quote}
               </p>
               <p id='author'>{this.state.author}</p>
