@@ -10,7 +10,7 @@ const LOADS = ['Searching...', 'Generating...', 'Thinking...', 'Asking Alexa...'
                'Going to the library...', '💤',
                '🔎📚', '🔎🌐', '🤔'];
 
-// TODO:
+//       🆗 freeCC Feature Complete
 
 // DONE: ✅ make button disappear on click
 //       ✅ define get random between min and max function
@@ -30,7 +30,6 @@ const getNewValue = (prev, arr) => {
   };
   return curr;
 };
-
 
 class QuoteBox extends React.Component {
   constructor(props) {
@@ -134,7 +133,6 @@ class Backdrop extends React.Component {
       colours: ['#16A085', '#27AE60', '#F39C12', '#E74C3C',
                '#9B59B6', '#FB6964', '#BDBB99',
                '#77B1A9', '#73A857']
-
     };
     this.changeBackground = this.changeBackground.bind(this);
   }
