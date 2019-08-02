@@ -1,21 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { createContainer } from 'unstated-next';
+import React, { useEffect, useRef } from 'react';
 import './App.css';
+import { trigger, tweet } from './functions/functions';
+import { FetchHooks, QuoteHooks, LoadHooks, BackgroundHooks } from './hooks/hooks';
 
-const QUOTESURL = `https://gist.githubusercontent.com/
-                   camperbot/5a022b72e96c4c9585c32bf6a75f62d9/
-                   raw/e3c6895ce42069f0ee7e991229064f167fe8ccdc/
-                   quotes.json`;
-
-const LOADS = ['Searching...', 'Generating...', 'Thinking...', 'Asking Alexa...', 'Reading 📖',
-               'Going to the library...', '💤',
-               '🔎📚', '🔎🌐', '🤔'];
-
-const COLOURS = ['#16A085', '#27AE60', '#F39C12', '#E74C3C',
-                 '#9B59B6', '#FB6964', '#BDBB99',
-                 '#77B1A9', '#73A857'];
-
-//       🆗 freeCC Feature Complete
 
 // TODO:
 
@@ -27,88 +14,13 @@ const COLOURS = ['#16A085', '#27AE60', '#F39C12', '#E74C3C',
 //       ✅ implement tweet functionality
 //       ✅ define getNewValue function
 //       ✅ add collision checks to QuoteBox
+//       🆗 freeCC Feature Complete
 //       ✅ replace while loop with do...while loop in getNewValue
 //       ✅ improve quote symbol display logic
-//       ✅ implement hooks and unstated-next
+//       🆗 rewrite using hooks and unstated-next
+//       ✅ separate code into individual files
 
-// Hooks
-function useFetchHooks() {
-  const [quotes, setQuotes] = useState([]);
-  const [loading, setLoading] = useState(true);
 
-  async function setQuotesConstant() {
-    const promise = await fetch( QUOTESURL.replace(/\s/g, '') );
-    const json = await promise.json();
-    setQuotes(json.quotes);
-    setLoading(false);
-  };
-
-  useEffect(() => setQuotesConstant(), [] );
-
-  return { quotes, loading };
-};
-
-function useQuoteHooks() {
-  const [quote, setQuote] = useState(' The quick brown fox jumped over the lazy dog.');
-  const [author, setAuthor] = useState('-Bob');
-  const loadhooks = LoadHooks.useContainer();
-  const fetchhooks = FetchHooks.useContainer();
-
-  const getQuote = () => {
-    const newQuote = getNewValue(quote, fetchhooks.quotes);
-    setTimeout(() => {
-      if (loadhooks.load === '💤') {
-        setQuote('');
-        setAuthor('');
-      } else {
-        setQuote(' ' + newQuote.quote);
-        setAuthor('-' + newQuote.author.trim().replace( /[^a-z. ]/gi, '' ));
-      };
-    }, 500);
-  };
-
-  return { quote, author, getQuote };
-};
-
-function useLoadHooks() {
-  const [load, setLoad] = useState('');
-  const getLoad = () => setLoad( load => getNewValue(load, LOADS) );
-
-  return { load, getLoad };
-};
-
-function useBackgroundHooks() {
-  const [background, setBackground] = useState('whitesmoke');
-  const getBackground = () => setBackground( getNewValue(background, COLOURS) );
-  
-  return { background, getBackground };
-};
-
-// Containers
-const FetchHooks = createContainer(useFetchHooks);
-const QuoteHooks = createContainer(useQuoteHooks);
-const LoadHooks = createContainer(useLoadHooks);
-const BackgroundHooks = createContainer(useBackgroundHooks);
-
-// Functions
-function trigger(classSelector, siblingElem, transitionElem) {
-  const card = document.querySelector(transitionElem);
-  const quoteBtn = document.querySelector(siblingElem);
-  card.addEventListener('transitionend', () => quoteBtn.classList.remove(classSelector));
-  quoteBtn.classList.add(classSelector);
-};
-
-function tweet(quote, author, classSelector, twitterLinkElem, transitionElem) {
-  const tweetLnk = document.querySelector(twitterLinkElem);
-  const tweetBtn = document.querySelector(transitionElem);
-  setTimeout( () => tweetBtn.classList.remove(classSelector), 1000 );
-  tweetBtn.classList.add(classSelector);
-  setTimeout( () => window.open( tweetLnk.href + '?&text=' + encodeURIComponent(
-                    '"' + quote.trim() + '" ' + author)
-                    ), 150 );
-};
-
-// Displays
 function QuoteBoxDisplay() {
   const fetchhooks = FetchHooks.useContainer();
   const quotehooks = QuoteHooks.useContainer();
@@ -169,11 +81,11 @@ function BackdropDisplay() {
   return (
     <div className='backdrop' style={{ backgroundColor: backgroundhooks.background }}>
       <FetchHooks.Provider>
-      <LoadHooks.Provider>
-      <QuoteHooks.Provider>
-        <QuoteBoxDisplay />
-      </QuoteHooks.Provider>
-      </LoadHooks.Provider>
+        <LoadHooks.Provider>
+          <QuoteHooks.Provider>
+            <QuoteBoxDisplay />
+          </QuoteHooks.Provider>
+        </LoadHooks.Provider>
       </FetchHooks.Provider>
     </div>
   )
@@ -185,17 +97,6 @@ function Display() {
       <BackdropDisplay />
     </BackgroundHooks.Provider>
   )
-};
-
-// Helper Functions
-const randomBetween = (min, max) => ( Math.floor( Math.random() * (max - min + 1) + min ) );
-
-const getNewValue = (prev, arr) => {
-  const min = 0;
-  const max = arr.length - 1;
-  let curr;
-  do { curr = arr[randomBetween(min, max)] } while (curr === prev);
-  return curr;
 };
 
 export default Display;
