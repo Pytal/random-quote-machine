@@ -3,7 +3,7 @@ import { createContainer } from 'unstated-next';
 import { QUOTESURL, LOADS, COLOURS } from '../globals/globals';
 import { getNewValue } from '../helpers/helpers';
 
-
+const FetchHooks = createContainer(useFetchHooks);
 function useFetchHooks() {
   const [quotes, setQuotes] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -20,6 +20,7 @@ function useFetchHooks() {
   return { quotes, loading };
 };
 
+const QuoteHooks = createContainer(useQuoteHooks);
 function useQuoteHooks() {
   const [quote, setQuote] = useState(' The quick brown fox jumped over the lazy dog.');
   const [author, setAuthor] = useState('-Bob');
@@ -48,6 +49,7 @@ function useQuoteHooks() {
   return { quote, author, getQuote };
 };
 
+const LoadHooks = createContainer(useLoadHooks);
 function useLoadHooks() {
   const [load, setLoad] = useState('');
   const getLoad = () => setLoad( load => getNewValue(load, LOADS) );
@@ -55,16 +57,12 @@ function useLoadHooks() {
   return { load, getLoad };
 };
 
+const BackgroundHooks = createContainer(useBackgroundHooks);
 function useBackgroundHooks() {
   const [background, setBackground] = useState('whitesmoke');
   const getBackground = () => setBackground( background => getNewValue(background, COLOURS) );
   
   return { background, getBackground };
 };
-
-const FetchHooks = createContainer(useFetchHooks);
-const QuoteHooks = createContainer(useQuoteHooks);
-const LoadHooks = createContainer(useLoadHooks);
-const BackgroundHooks = createContainer(useBackgroundHooks);
 
 export { FetchHooks, QuoteHooks, LoadHooks, BackgroundHooks };
