@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { createContainer } from 'unstated-next';
 import { QUOTESURL, LOADS, COLOURS } from '../globals/globals';
 import { getNewValue } from '../helpers/helpers';
@@ -23,8 +23,8 @@ function useFetchHooks() {
 function useQuoteHooks() {
   const [quote, setQuote] = useState(' The quick brown fox jumped over the lazy dog.');
   const [author, setAuthor] = useState('-Bob');
-  const loadhooks = LoadHooks.useContainer();
   const fetchhooks = FetchHooks.useContainer();
+  const loadhooks = LoadHooks.useContainer();
 
   const getQuote = () => {
     const newQuote = getNewValue(quote, fetchhooks.quotes);
@@ -36,8 +36,14 @@ function useQuoteHooks() {
         setQuote(' ' + newQuote.quote);
         setAuthor('-' + newQuote.author.trim().replace( /[^a-z. ]/gi, '' ));
       };
-    }, 500);
+    }, 500)
   };
+
+  const firstLoad = useRef(true);
+  useEffect(() => {
+    if (firstLoad.current) { firstLoad.current = false; return; };
+    getQuote();
+  }, [loadhooks.load] ); // eslint-disable-line
 
   return { quote, author, getQuote };
 };
@@ -51,7 +57,7 @@ function useLoadHooks() {
 
 function useBackgroundHooks() {
   const [background, setBackground] = useState('whitesmoke');
-  const getBackground = () => setBackground( getNewValue(background, COLOURS) );
+  const getBackground = () => setBackground( background => getNewValue(background, COLOURS) );
   
   return { background, getBackground };
 };

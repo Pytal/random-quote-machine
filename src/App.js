@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import './App.css';
 import { trigger, tweet } from './functions/functions';
 import { FetchHooks, QuoteHooks, LoadHooks, BackgroundHooks } from './hooks/hooks';
@@ -6,7 +6,7 @@ import { FetchHooks, QuoteHooks, LoadHooks, BackgroundHooks } from './hooks/hook
 
 // TODO:
 
-// BUGS: 🔧 useEffect has a missing dependency: 'quotehooks'
+// BUGS:
 
 // DONE: ✅ make button disappear on click
 //       ✅ define randomBetween min and max function
@@ -19,6 +19,7 @@ import { FetchHooks, QuoteHooks, LoadHooks, BackgroundHooks } from './hooks/hook
 //       ✅ improve quote symbol display logic
 //       🆗 rewrite using hooks and unstated-next
 //       ✅ separate code into individual files
+//       ✅ move useEffect into QuoteHooks
 
 
 function QuoteBoxDisplay() {
@@ -26,13 +27,6 @@ function QuoteBoxDisplay() {
   const quotehooks = QuoteHooks.useContainer();
   const loadhooks = LoadHooks.useContainer();
   const backgroundhooks = BackgroundHooks.useContainer();
-
-  // 🔧 useEffect has a missing dependency: 'quotehooks'
-  const firstLoad = useRef(true);
-  useEffect(() => {
-    if (firstLoad.current) { firstLoad.current = false; return; };
-    quotehooks.getQuote();
-  }, [loadhooks.load] );
 
   return (
     <div className='grid'>
