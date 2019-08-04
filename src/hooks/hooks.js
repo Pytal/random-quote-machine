@@ -9,8 +9,8 @@ function useFetchHooks() {
   const [loading, setLoading] = useState(true);
 
   async function setQuotesConstant() {
-    const promise = await fetch( QUOTESURL.replace(/\s/g, '') );
-    const json = await promise.json();
+    const res = await fetch( QUOTESURL.replace(/\s/g, '') );
+    const json = await res.json();
     setQuotes(json.quotes);
     setLoading(false);
   };
